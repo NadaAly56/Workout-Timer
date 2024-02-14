@@ -19,16 +19,20 @@ function Calculator({ workouts, allowSound }) {
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
- const playSound = useCallback( function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  }, [allowSound])
+ 
 
   useEffect(()=>{
     setDuration(duration=>(number * sets * speed) / 60 + (sets - 1) * durationBreak)
-    playSound()
-  },[number, sets,speed, durationBreak, playSound])
+  },[number, sets,speed, durationBreak])
+
+  useEffect(()=>{
+  (function () {
+    if (!allowSound) return;
+    const sound = new Audio(clickSound);
+    sound.play();
+  })()
+    
+  },[duration, allowSound])
   return (
     <>
       <form>
